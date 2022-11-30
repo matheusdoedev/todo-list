@@ -1,0 +1,6 @@
+com\matheusdoedev\todo\list\utils\Utils.class
+com\matheusdoedev\todo\list\models\Menu.class
+com\matheusdoedev\todo\list\Principal.class
+com\matheusdoedev\todo\list\models\Task.class
+com\matheusdoedev\todo\list\repositories\TaskRepository.class
+com\matheusdoedev\todo\list\enums\TaskStatusEnum.class
