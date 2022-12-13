@@ -80,37 +80,7 @@ public class TaskRepository {
     public void show() {
         try {
             Utils.println("----------- Buscar tarefa ------------");
-            String searchDescription = Utils.askForAString("Digite uma parte da descrição da tarefa: ");
-            ArrayList<Task> tasksFound = new ArrayList();
-            Task selectedTask;
-
-            for (Task task : this.tasks) {
-                if (task.getDescription().contains(searchDescription)) {
-                    tasksFound.add(task.getId(), task);
-                }
-            }
-            // valida as tarefas achadas caso tenha mais de uma
-            if (tasksFound.size() > 1) {
-                int option = 0;
-
-                for (int index = 0; index < tasksFound.size(); index++) {
-                    Task task = tasksFound.get(index);
-
-                    Utils.println("Id: " + task.getId() + "| Descrição: " + task.getDescription());
-                }
-                Utils.println("Escolha uma tarefa de 1 à " + tasksFound.size());
-                while (option < 1 || option > tasksFound.size()) {
-                    option = Utils.getScanner().nextInt();
-
-                    if (option < 1 || option > tasksFound.size()) {
-                        Utils.println("Digite uma opção válida!");
-                    }
-                }
-                selectedTask = tasksFound.get(option);
-            } else {
-                selectedTask = tasksFound.get(0);
-            }
-
+            int taskId = Utils.askForAInt("Digite o id da tarefa: ");
             int whatToDoWithTaskOption = 0;
 
             Utils.println("1) Editar tarefa");
@@ -127,10 +97,10 @@ public class TaskRepository {
             ;
             switch (whatToDoWithTaskOption) {
                 case 1:
-                    this.update(selectedTask.getId());
+                    this.update(taskId);
                     break;
                 case 2:
-                    this.delete(selectedTask.getId());
+                    this.delete(taskId);
                     break;
 
             }
@@ -178,7 +148,7 @@ public class TaskRepository {
         try {
             Utils.println("------TAREFAS------");
             for (Task task : this.tasks) {
-                Utils.println(task.getId() + " | " + task.getDescription() + " | " + task.getStatus());
+                Utils.println(task.getId() + " | " + task.getDescription() + " | " + task.getStatus() + " | ");
             }
         } catch (Exception error) {
             Utils.println("Não foi possível listar as tarefas.");
