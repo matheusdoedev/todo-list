@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.matheusdoedev.todo.list.models.Task;
+import com.matheusdoedev.todo.list.entities.NormalTask;
+import com.matheusdoedev.todo.list.entities.RecurrentTask;
+import com.matheusdoedev.todo.list.enums.TaskRecurrenceTypeEnum;
 import com.matheusdoedev.todo.list.utils.Utils;
 import com.matheusdoedev.todo.list.enums.TaskStatusEnum;
 
@@ -14,16 +17,45 @@ public class TaskRepository {
     public TaskRepository() {
         // adiciona 7 tarefas para atender os requisitos da A3 
         for (int count = 0; count < 7; count++) {
-            tasks.add(count, new Task(count, "Tem que fazer tal coisa"));
+            tasks.add(count, new NormalTask("Tem que fazer tal coisa"));
         }
     }
 
     public void create() {
         try {
-            int index = this.tasks.size();
             String description = Utils.askForAString("Digite a descrição da tarefa: ");
-
-            this.tasks.add(new Task(index, description));
+            
+            Utils.println("É uma tarefa recorrente? (Digite o número da opção)");
+            Utils.println("1) Sim");
+            Utils.println("2) Não");
+            
+            int isRecurrent;
+            
+            do {
+                isRecurrent = Utils.getScanner().nextInt();
+                
+                if (isRecurrent < 1 || isRecurrent > 2) {
+                    Utils.println("Digite uma opção válida.");
+                }
+            } while (isRecurrent < 1 || isRecurrent > 2);
+            
+            if (isRecurrent == 1) {
+                Utils.println("Qual é a frequência da recorrência?");
+                Utils.println("1) Dias da semana (Seg-Sex)");
+                Utils.println("2) Semanal");
+                Utils.println("3) Todos os dias");
+                Utils.println("4) Mensal");
+                
+                int selectedOption;
+                
+                do {
+                    selectedOption = Utils.getScanner().nextInt();
+                } while (selectedOption < 1 || selectedOption > 4);
+                
+                this.tasks.add(new RecurrentTask(description, TaskRecurrenceTypeEnum.WEEKDAYS));
+            } else {
+                this.tasks.add(new NormalTask(description));
+            }
             Utils.println("Tarefa criada com sucesso!");
         } catch (Exception error) {
             Utils.println("Não foi possível criar a tarefa. Tente novamente!");

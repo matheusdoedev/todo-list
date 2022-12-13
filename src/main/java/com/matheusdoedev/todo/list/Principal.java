@@ -1,6 +1,6 @@
 package com.matheusdoedev.todo.list;
 
-import com.matheusdoedev.todo.list.models.Menu;
+import com.matheusdoedev.todo.list.entities.Menu;
 
 public class Principal {
 
