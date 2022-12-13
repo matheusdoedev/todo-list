@@ -11,12 +11,9 @@ public class Menu {
     private String[] MESSAGES = {
         "Selecione uma opção do menu:",
         "1) Criar uma tarefa",
-        "2) Editar uma tarefa",
-        "3) Buscar tarefa pelo id",
-        "4) Listar todas as tarefas",
-        "5) Deletar tarefa pelo id",
-        "6) Concluir tarefa",
-        "7) Sair"
+        "2) Buscar tarefa",
+        "3) Listar todas as tarefas",
+        "4) Sair"
     };
     
     public Menu() {
@@ -49,9 +46,9 @@ public class Menu {
                 this.taskRepository.create();
                 break;
             case 2:
-                this.taskRepository.update();
+                this.taskRepository.show();
                 break;
-            case 4:
+            case 3:
                 this.taskRepository.list();
                 break;
         }

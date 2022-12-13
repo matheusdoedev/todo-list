@@ -7,8 +7,8 @@ public class RecurrentTask extends Task {
     
     private TaskRecurrenceTypeEnum recurrenceType;
     
-    public RecurrentTask(String descripton, TaskRecurrenceTypeEnum recurrenceType) {
-        super(descripton);
+    public RecurrentTask(int id, String descripton, TaskRecurrenceTypeEnum recurrenceType) {
+        super(id, descripton);
         this.recurrenceType = recurrenceType;
     }
 

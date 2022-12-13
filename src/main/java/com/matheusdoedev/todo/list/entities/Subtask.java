@@ -8,8 +8,8 @@ public class Subtask extends Task {
     
     private UUID parentTaskID;
     
-    public Subtask(String description, UUID parentId) {
-        super(description);
+    public Subtask(int id, String description, UUID parentId) {
+        super(id, description);
         this.parentTaskID = parentId;
     }
 

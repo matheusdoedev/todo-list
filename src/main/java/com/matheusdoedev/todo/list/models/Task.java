@@ -1,20 +1,19 @@
 package com.matheusdoedev.todo.list.models;
 
 import java.util.Date;
-import java.util.UUID;
 
 import com.matheusdoedev.todo.list.enums.TaskStatusEnum;
 
 public abstract class Task {
 
-    private UUID id;
+    private int id;
     private String description;
     private long createdAt;
     private long updatedAt;
     private TaskStatusEnum status;
 
-    public Task(String description) {
-        this.id = UUID.randomUUID();
+    public Task(int id, String description) {
+        this.id = id;
         this.description = description;
         this.createdAt = new Date().getTime();
         this.updatedAt = new Date().getTime();
@@ -22,7 +21,7 @@ public abstract class Task {
     }
 
     // getters and setters
-    public UUID getId() {
+    public int getId() {
         return id;
     }
 

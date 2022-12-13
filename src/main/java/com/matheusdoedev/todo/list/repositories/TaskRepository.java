@@ -17,7 +17,7 @@ public class TaskRepository {
     public TaskRepository() {
         // adiciona 7 tarefas para atender os requisitos da A3
         for (int count = 0; count < 7; count++) {
-            tasks.add(count, new NormalTask("Tem que fazer tal coisa"));
+            tasks.add(count, new NormalTask(this.tasks.size(), "Tem que fazer tal coisa"));
         }
     }
 
@@ -52,9 +52,9 @@ public class TaskRepository {
                     selectedOption = Utils.getScanner().nextInt();
                 } while (selectedOption < 1 || selectedOption > 4);
 
-                this.tasks.add(new RecurrentTask(description, TaskRecurrenceTypeEnum.WEEKDAYS));
+                this.tasks.add(this.tasks.size(), new RecurrentTask(this.tasks.size(), description, TaskRecurrenceTypeEnum.WEEKDAYS));
             } else {
-                this.tasks.add(new NormalTask(description));
+                this.tasks.add(this.tasks.size(), new NormalTask(this.tasks.size(), description));
             }
             Utils.println("Tarefa criada com sucesso!");
         } catch (Exception error) {
@@ -62,15 +62,14 @@ public class TaskRepository {
         }
     }
 
-    public void update() {
+    public void update(int id) {
         try {
-            int taskId = Utils.askForAInt("Digite o id da tarefa: ");
             String description = Utils.askForAString("Digite a nova descrição da tarefa: ");
-            Task task = this.tasks.get(taskId);
+            Task task = this.tasks.get(id);
 
             task.setDescription(description);
             task.setUpdatedAt(new Date().getTime());
-            this.tasks.set(taskId, task);
+            this.tasks.set(id, task);
             Utils.println("Tarefa atualizada com sucesso.");
         } catch (Exception error) {
             Utils.println("Não foi possível atualizar a tarefa. Tente novamente!");
@@ -89,25 +88,26 @@ public class TaskRepository {
                     tasksFound.add(task.getId(), task);
                 }
             }
-            if (tasksFound.length > 1) {
+            // valida as tarefas achadas caso tenha mais de uma
+            if (tasksFound.size() > 1) {
                 int option = 0;
 
-                for (int index = 1; index <= tasksFound.length; index++) {
-                    Task task = tasksFound[index];
+                for (int index = 0; index < tasksFound.size(); index++) {
+                    Task task = tasksFound.get(index);
 
                     Utils.println("Id: " + task.getId() + "| Descrição: " + task.getDescription());
                 }
-                Utils.askForAString("Escolha uma tarefa de 1 à " + tasksFound.length);
-                while (option < 1 || option > tasksFound.length) {
+                Utils.println("Escolha uma tarefa de 1 à " + tasksFound.size());
+                while (option < 1 || option > tasksFound.size()) { 
                     option = Utils.getScanner().nextInt();
 
-                    if (option < 1 || option > tasksFound.length) {
+                    if (option < 1 || option > tasksFound.size()) {
                         Utils.println("Digite uma opção válida!");
                     }
                 }
-                selectedTask = tasksFound[option];
+                selectedTask = tasksFound.get(option);
             } else {
-                selectedTask = tasksFound[0];
+                selectedTask = tasksFound.get(0);
             }
 
             int whatToDoWithTaskOption = 0;
@@ -122,8 +122,7 @@ public class TaskRepository {
                 if (whatToDoWithTaskOption < 1 || whatToDoWithTaskOption > 3) {
                     Utils.println("Digite uma opção válida!");
                 }
-            }
-            ;
+            };
             switch (whatToDoWithTaskOption) {
                 case 1:
                     this.update(selectedTask.getId());
@@ -132,16 +131,30 @@ public class TaskRepository {
                     this.delete(selectedTask.getId());
                     break;
 
-            tch (Exception error) {
+            } 
+        } catch (Exception error) {
+            Utils.println(error.getMessage());
             Utils.println("Erro ao mostrar detalhes da tarefa. Tente novamente!");
         }
     }
 
-    public void delete() {
+    public void delete(int id) {
         try {
-            int taskId = Utils.askForAInt("Digite o id da tarefa: ");
-
-            this.tasks.remove(taskId);
+            int option = 0;
+            
+            Utils.println("Tem certeza que deseja deletar a tarefa?");
+            Utils.println("1) Sim");
+            Utils.println("2) Não");
+            while (option < 1 || option > 2) {
+                option = Utils.getScanner().nextInt();
+                
+                if (option == 1) {
+                    this.tasks.remove(id);
+                }
+                if (option < 1 || option > 2) {
+                    Utils.println("Digite uma opção válida");
+                }
+            }
             Utils.println("Tarefa deletada com sucesso.");
         } catch (Exception error) {
             Utils.println("Erro ao tentar deletar tarefa. Tente novamente!");

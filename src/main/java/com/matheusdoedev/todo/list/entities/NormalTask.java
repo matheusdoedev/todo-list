@@ -4,7 +4,7 @@ import com.matheusdoedev.todo.list.models.Task;
 
 public class NormalTask extends Task {
     
-    public NormalTask(String description) {
-        super(description);
+    public NormalTask(int id, String description) {
+        super(id, description);
     }
 }
