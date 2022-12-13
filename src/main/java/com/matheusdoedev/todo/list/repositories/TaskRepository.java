@@ -52,7 +52,8 @@ public class TaskRepository {
                     selectedOption = Utils.getScanner().nextInt();
                 } while (selectedOption < 1 || selectedOption > 4);
 
-                this.tasks.add(this.tasks.size(), new RecurrentTask(this.tasks.size(), description, TaskRecurrenceTypeEnum.WEEKDAYS));
+                this.tasks.add(this.tasks.size(),
+                        new RecurrentTask(this.tasks.size(), description, TaskRecurrenceTypeEnum.WEEKDAYS));
             } else {
                 this.tasks.add(this.tasks.size(), new NormalTask(this.tasks.size(), description));
             }
@@ -98,7 +99,7 @@ public class TaskRepository {
                     Utils.println("Id: " + task.getId() + "| Descrição: " + task.getDescription());
                 }
                 Utils.println("Escolha uma tarefa de 1 à " + tasksFound.size());
-                while (option < 1 || option > tasksFound.size()) { 
+                while (option < 1 || option > tasksFound.size()) {
                     option = Utils.getScanner().nextInt();
 
                     if (option < 1 || option > tasksFound.size()) {
@@ -122,7 +123,8 @@ public class TaskRepository {
                 if (whatToDoWithTaskOption < 1 || whatToDoWithTaskOption > 3) {
                     Utils.println("Digite uma opção válida!");
                 }
-            };
+            }
+            ;
             switch (whatToDoWithTaskOption) {
                 case 1:
                     this.update(selectedTask.getId());
@@ -131,9 +133,8 @@ public class TaskRepository {
                     this.delete(selectedTask.getId());
                     break;
 
-            } 
+            }
         } catch (Exception error) {
-            Utils.println(error.getMessage());
             Utils.println("Erro ao mostrar detalhes da tarefa. Tente novamente!");
         }
     }
@@ -141,13 +142,13 @@ public class TaskRepository {
     public void delete(int id) {
         try {
             int option = 0;
-            
+
             Utils.println("Tem certeza que deseja deletar a tarefa?");
             Utils.println("1) Sim");
             Utils.println("2) Não");
             while (option < 1 || option > 2) {
                 option = Utils.getScanner().nextInt();
-                
+
                 if (option == 1) {
                     this.tasks.remove(id);
                 }
